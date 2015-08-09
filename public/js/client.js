@@ -14,6 +14,16 @@
     var context = new AudioContext(),
         recorder;
 
+    var populateOutput = function populateOutput(response) {
+      console.log(response);
+
+      var player = new window.Audio(),
+          blob = new Blob([response.textToSpeech], {type: 'audio/wav'});
+
+      player.src = URL.createObjectURL(blob);
+      player.play();
+    };
+
     //////////////////////////////
     // Audio Callback
     //////////////////////////////
@@ -25,7 +35,9 @@
       request.responseType = 'blob';
       request.onload = function () {
         var formData = new FormData(),
-            xhr = new XMLHttpRequest();
+            xhr = new XMLHttpRequest(),
+            blob,
+            player;
 
         formData.append('audio', this.response);
 
@@ -34,7 +46,7 @@
         xhr.setRequestHeader('X-Requested-With','XMLHttpRequest');
 
         xhr.onload = function () {
-          console.log(xhr.response);
+          populateOutput(xhr.response);
         }
 
         xhr.send(formData);
@@ -75,7 +87,7 @@
         xhr.setRequestHeader('X-Requested-With','XMLHttpRequest');
 
         xhr.onload = function () {
-          console.log(xhr.response);
+          populateOutput(xhr.response);
         }
 
         xhr.send(formData);

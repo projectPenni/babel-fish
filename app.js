@@ -40,7 +40,6 @@ app.use(express.static(__dirname + '/public'));
 // From Audio
 //////////////////////////////
 fromAudio = function fromAudio(input, res) {
-  input.stt = speechToText;
   res.send(JSON.stringify(input));
 }
 

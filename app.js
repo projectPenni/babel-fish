@@ -54,25 +54,27 @@ fromAudio = function fromAudio(input, res) {
 
       output.speechToText = results;
 
-      params = {
-        'text': results.transcript,
-        'source': 'en',
-        'target': 'fr'
-      };
+      res.send(JSON.stringify(output));
 
-      // Translate Text
-      languageTranslation(params, function (err, results) {
-        if (err) {
-          res.send(500, {
-            'error': err
-          });
-        }
-        else {
-          output.languageTranslation = translation;
+      // params = {
+      //   'text': results.transcript,
+      //   'source': 'en',
+      //   'target': 'fr'
+      // };
 
-          res.send(JSON.stringify(output));
-        }
-      });
+      // // Translate Text
+      // languageTranslation(params, function (err, results) {
+      //   if (err) {
+      //     res.send(500, {
+      //       'error': err
+      //     });
+      //   }
+      //   else {
+      //     output.languageTranslation = translation;
+
+      //     res.send(JSON.stringify(output));
+      //   }
+      // });
     }
   });
 }

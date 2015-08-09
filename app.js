@@ -58,11 +58,14 @@ fromAudio = function fromAudio(input, res) {
 }
 
 fromText = function fromText(input, res) {
-  var params = {
-    'text': input.text,
-  }
+  var output = {};
 
-  textToSpeech(params, function (err, response) {
+  output.speechToText = {
+    'confidence': 1,
+    'transcript': input.text
+  };
+
+  translateToSpeech(output, function (err, response) {
     if (err) {
       res.send(500, {
         'error': err

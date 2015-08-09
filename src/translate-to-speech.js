@@ -25,9 +25,8 @@ module.exports = function (output, res) {
       };
 
       params = {
-        'text': output.languageTranslation.translation,
-        'accept': 'audio/wav'
-      }
+        'text': output.languageTranslation.translation
+      };
 
       textToSpeech(params, function (err, response) {
         if (err) {

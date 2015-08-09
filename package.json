@@ -9,7 +9,8 @@
     "cfenv": "1.0.x",
     "express": "4.12.x",
     "formidable": "^1.0.17",
-    "fs-extra": "^0.23.1"
+    "fs-extra": "^0.23.1",
+    "watson-developer-cloud": "^0.9.27"
   },
   "repository": {},
   "engines": {

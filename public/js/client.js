@@ -27,11 +27,7 @@
         var formData = new FormData(),
             xhr = new XMLHttpRequest();
 
-        // console.log(request.response);
         formData.append('audio', this.response);
-
-        console.log(this.response.data);
-        // console.log(formData.get('uploads'));
 
         xhr.open('POST', 'translate/audio', true);
         xhr.responseType = 'json';
@@ -70,6 +66,7 @@
       button.addEventListener('click', function () {
         if (button.getAttribute('data-recording')) {
           button.removeAttribute('data-recording');
+          button.value = 'Record';
           recorder && recorder.stop();
           recorder.exportWAV();
           recorder.clear();
@@ -77,6 +74,7 @@
         }
         else {
           button.setAttribute('data-recording', true);
+          button.value = 'Stop Recording';
           recorder && recorder.record();
           console.log('Recording...');
         }

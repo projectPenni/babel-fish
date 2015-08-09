@@ -61,7 +61,25 @@
     //////////////////////////////
     window.addEventListener('DOMContentLoaded', function () {
       var button = document.getElementById('record'),
+          hello = document.getElementById('hello'),
           url;
+
+      hello.addEventListener('click', function () {
+        var formData = new FormData(),
+            xhr = new XMLHttpRequest();
+
+        formData.append('text', 'Hello, my name is Sam');
+
+        xhr.open('POST', 'translate/text', true);
+        xhr.responseType = 'json';
+        xhr.setRequestHeader('X-Requested-With','XMLHttpRequest');
+
+        xhr.onload = function () {
+          console.log(xhr.response);
+        }
+
+        xhr.send(formData);
+      });
 
       button.addEventListener('click', function () {
         if (button.getAttribute('data-recording')) {

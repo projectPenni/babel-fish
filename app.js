@@ -59,7 +59,7 @@ fromAudio = function fromAudio(input, res) {
 
 fromText = function fromText(input, res) {
   var params = {
-    'text': 'My name is Sam Richard and I like chicken',
+    'text': input.text,
   }
 
   textToSpeech(params, function (err, response) {
@@ -90,6 +90,10 @@ app.post('/translate/:from', function translateEndpoint (req, res) {
     console.log(err);
   });
 
+  form.on('field', function (field, value) {
+    result[field] = value;
+  });
+
   form.on('file', function (field, file) {
     if (field === 'audio') {
       var path = file.path,
@@ -107,10 +111,6 @@ app.post('/translate/:from', function translateEndpoint (req, res) {
       }
     }
   });
-
-  if (from === 'text') {
-    fromText(result, res);
-  }
 
   form.on('end', function () {
     if (from === 'audio') {

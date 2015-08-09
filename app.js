@@ -8,7 +8,6 @@
 // for more info, see: http://expressjs.com
 var express = require('express'),
     cfenv = require('cfenv'),
-    watson = require('watson-developer-cloud'),
     fs = require('fs-extra'),
     formidable = require('formidable');
 
@@ -33,8 +32,7 @@ app.use(express.static(__dirname + '/public'));
 // From Audio
 //////////////////////////////
 fromAudio = function fromAudio(input, res) {
-  var s2t,
-      params,
+  var params,
       output = {};
 
   params = {
@@ -43,16 +41,14 @@ fromAudio = function fromAudio(input, res) {
   };
 
   // Speech to Text
-  speechToText(params, function (err, results) {
+  speechToText(params, function (err, response) {
     if (err) {
       res.send(500, {
         'error': err
       });
     }
     else {
-      results = response.results[response.result_index].alternatives[0];
-
-      output.speechToText = results;
+      output.speechToText = response.results[response.result_index].alternatives[0];
 
       res.send(JSON.stringify(output));
 

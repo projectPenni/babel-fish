@@ -14,6 +14,7 @@ module.exports = function (params, cb) {
     textToSpeech = watson.speech_to_text({
       'username': credentials.username,
       'password': credentials.password,
+      'url': credentials.url,
       'version': 'v1'
     });
 

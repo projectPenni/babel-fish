@@ -31,9 +31,16 @@ module.exports = function (output, res) {
       }
 
       textToSpeech(params, function (err, response) {
-        output.textToSpeech = response;
+        if (err) {
+          res.send(500, {
+            'error': err
+          });
+        }
+        else {
+          output.textToSpeech = response;
 
-        res.send(JSON.stringify(output));
+          res.send(JSON.stringify(output));
+        }
       });
     }
   });

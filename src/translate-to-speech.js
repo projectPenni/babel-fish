@@ -26,7 +26,6 @@ module.exports = function (output, res) {
 
       params = {
         'text': output.languageTranslation.translation,
-        'voice': 'fr-FR_ReneeVoice',
         'accept': 'audio/wav'
       }
 

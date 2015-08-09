@@ -108,6 +108,10 @@ app.post('/translate/:from', function translateEndpoint (req, res) {
     }
   });
 
+  if (from === 'text') {
+    fromText(result, res);
+  }
+
   form.on('end', function () {
     if (from === 'audio') {
       fromAudio(result, res);

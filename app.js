@@ -20,9 +20,9 @@ var app = express(),
     fromVideo;
 
 // APIs
-var speechToText = {},
-    textToSpeech = {},
-    translation = {};
+var speechToText,
+    textToSpeech,
+    translation;
 
 if (process.env.VCAP_SERVICES) {
   services = JSON.parse(process.env.VCAP_SERVICES);
@@ -41,7 +41,36 @@ app.use(express.static(__dirname + '/public'));
 // From Audio
 //////////////////////////////
 fromAudio = function fromAudio(input, res) {
-  res.send(JSON.stringify(input));
+  var s2t,
+      params;
+
+  if (speechToText) {
+    s2t = watson.speech_to_text({
+      'username': speechToText.username,
+      'password': speechToText.password,
+      'url': speechToText.url,
+      'version': 'v1'
+    });
+
+    params = {
+      'audio': fs.createReadStream(input.path),
+      'content_type': 'audio/l16; rate=44100'
+    };
+
+    s2t.recognize(function (err, response) {
+      if (err) {
+        res.send(500, {
+          'error': err
+        });
+      }
+      else {
+        res.send(JSON.stringify(response, null, 2));
+      }
+    });
+  }
+  else {
+    res.send(JSON.stringify(input));
+  }
 }
 
 //////////////////////////////

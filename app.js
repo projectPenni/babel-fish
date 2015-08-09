@@ -57,7 +57,11 @@ fromAudio = function fromAudio(input, res) {
       'content_type': 'audio/l16; rate=44100'
     };
 
+    console.log(params);
+
     s2t.recognize(function (err, response) {
+      console.log(err);
+      console.log(response);
       if (err) {
         res.send(500, {
           'error': err

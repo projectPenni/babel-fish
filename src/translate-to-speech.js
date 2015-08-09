@@ -24,22 +24,24 @@ module.exports = function (output, res) {
         'translation': response.translations[0].translation
       };
 
-      params = {
-        'text': output.languageTranslation.translation
-      };
+      res.send(JSON.stringify(output));
 
-      textToSpeech(params, function (err, response) {
-        if (err) {
-          res.send(500, {
-            'error': err
-          });
-        }
-        else {
-          output.textToSpeech = response;
+      // params = {
+      //   'text': output.languageTranslation.translation
+      // };
 
-          res.send(JSON.stringify(output));
-        }
-      });
+      // textToSpeech(params, function (err, response) {
+      //   if (err) {
+      //     res.send(500, {
+      //       'error': err
+      //     });
+      //   }
+      //   else {
+      //     output.textToSpeech = response;
+
+      //     res.send(JSON.stringify(output));
+      //   }
+      // });
     }
   });
 }

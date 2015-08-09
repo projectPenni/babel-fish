@@ -90,6 +90,28 @@ fromAudio = function fromAudio(input, res) {
   }
 }
 
+fromText = function fromText(input, res) {
+  var params = {
+    'text': 'My name is Sam Richard and I like chicken',
+    'source': 'en',
+    'target': 'es'
+  }
+
+  languageTranslation(params, function (err, translation) {
+    if (err) {
+      res.send(500, {
+        'error': err
+      });
+    }
+    else {
+      res.send(JSON.stringify(translation));
+    }
+  });
+}
+
+//////////////////////////////
+// Language Translation
+//////////////////////////////
 languageTranslation = function languageTranslation(params, cb) {
   var lt,
       results;
@@ -98,8 +120,7 @@ languageTranslation = function languageTranslation(params, cb) {
     lt = watson.language_translation({
       'username': translation.username,
       'password': translation.password,
-      'url': translation.url,
-      'version': 'v1'
+      'version': 'v2'
     });
 
     lt.translate(params, cb);
@@ -149,7 +170,7 @@ app.post('/translate/:from', function translateEndpoint (req, res) {
       fromAudio(result, res);
     }
     else if (from === 'text') {
-      console.log(result);
+      fromText(result, res);
     }
     else {
       res.send(501, {

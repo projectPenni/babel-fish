@@ -54,7 +54,7 @@ fromAudio = function fromAudio(input, res) {
 
     params = {
       'audio': fs.createReadStream(input.file.path),
-      'content_type': 'audio/l16; rate=44100'
+      'content_type': 'audio/wav'
     };
 
     s2t.recognize(params, function (err, response) {

@@ -11,7 +11,7 @@ module.exports = function (params, cb) {
   var textToSpeech;
 
   if (credentials) {
-    textToSpeech = watson.speech_to_text({
+    textToSpeech = watson.text_to_speech({
       'username': credentials.username,
       'password': credentials.password,
       'url': credentials.url,

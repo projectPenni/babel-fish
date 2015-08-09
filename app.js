@@ -15,22 +15,13 @@ var express = require('express'),
 // create a new express server
 var app = express(),
     appEnv = cfenv.getAppEnv(),
-    services,
     fromAudio,
-    fromText,
-    languageTranslation;
+    fromText;
 
 // APIs
-var speechToText,
-    textToSpeech,
-    translation;
-
-if (process.env.VCAP_SERVICES) {
-  services = JSON.parse(process.env.VCAP_SERVICES);
-  speechToText = services.speech_to_text[0].credentials;
-  textToSpeech = services.text_to_speech[0].credentials;
-  translation = services.language_translation[0].credentials;
-}
+var languageTranslation = require('./src/language-translation'),
+    speechToText = require('./src/speech-to-text'),
+    textToSpeech = require('./src/text-to-speech');
 
 // Ensure TMP exists
 fs.ensureDirSync('./tmp');
@@ -44,50 +35,46 @@ app.use(express.static(__dirname + '/public'));
 fromAudio = function fromAudio(input, res) {
   var s2t,
       params,
-      results;
+      output = {};
 
-  if (speechToText) {
-    s2t = watson.speech_to_text({
-      'username': speechToText.username,
-      'password': speechToText.password,
-      'url': speechToText.url,
-      'version': 'v1'
-    });
+  params = {
+    'audio': fs.createReadStream(input.file.path),
+    'content_type': 'audio/wav'
+  };
 
-    params = {
-      'audio': fs.createReadStream(input.file.path),
-      'content_type': 'audio/wav'
-    };
+  // Speech to Text
+  speechToText(params, function (err, results) {
+    if (err) {
+      res.send(500, {
+        'error': err
+      });
+    }
+    else {
+      results = response.results[response.result_index].alternatives[0];
 
-    s2t.recognize(params, function (err, response) {
-      if (err) {
-        res.send(500, {
-          'error': err
-        });
-      }
-      else {
-        results = response.results[response.result_index].alternatives[0];
+      output.speechToText = results;
 
-        languageTranslation({
-          'text': results.transcript,
-          'source': 'en',
-          'target': 'fr'
-        }, function (err, translation) {
-          if (err) {
-            res.send(500, {
-              'error': err
-            });
-          }
-          else {
-            res.send(JSON.stringify(translation));
-          }
-        });
-      }
-    });
-  }
-  else {
-    res.send(JSON.stringify(input));
-  }
+      params = {
+        'text': results.transcript,
+        'source': 'en',
+        'target': 'fr'
+      };
+
+      // Translate Text
+      languageTranslation(params, function (err, results) {
+        if (err) {
+          res.send(500, {
+            'error': err
+          });
+        }
+        else {
+          output.languageTranslation = translation;
+
+          res.send(JSON.stringify(output));
+        }
+      });
+    }
+  });
 }
 
 fromText = function fromText(input, res) {
@@ -108,28 +95,6 @@ fromText = function fromText(input, res) {
     }
   });
 }
-
-//////////////////////////////
-// Language Translation
-//////////////////////////////
-languageTranslation = function languageTranslation(params, cb) {
-  var lt,
-      results;
-
-  if (translation) {
-    lt = watson.language_translation({
-      'username': translation.username,
-      'password': translation.password,
-      'version': 'v2'
-    });
-
-    lt.translate(params, cb);
-  }
-}
-
-//////////////////////////////
-// From Video
-//////////////////////////////
 
 //////////////////////////////
 // Translate Post

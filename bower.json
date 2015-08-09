@@ -1,0 +1,19 @@
+{
+  "name": "babel-fish",
+  "version": "0.0.0",
+  "homepage": "https://github.com/Snugug/babel-fish",
+  "authors": [
+    "Sam Richard <snugug@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "Recorderjs": "git@github.com:mattdiamond/Recorderjs.git#master"
+  }
+}

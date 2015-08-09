@@ -59,18 +59,18 @@ fromAudio = function fromAudio(input, res) {
 
     console.log(params);
 
-    s2t.recognize(function (err, response) {
-      console.log(err);
-      console.log(response);
-      if (err) {
-        res.send(500, {
-          'error': err
-        });
-      }
-      else {
-        res.send(JSON.stringify(response, null, 2));
-      }
-    });
+    // s2t.recognize(function (err, response) {
+    //   console.log(err);
+    //   console.log(response);
+    //   if (err) {
+    //     res.send(500, {
+    //       'error': err
+    //     });
+    //   }
+    //   else {
+    //     res.send(JSON.stringify(response, null, 2));
+    //   }
+    // });
   }
   else {
     res.send(JSON.stringify(input));

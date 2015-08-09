@@ -17,11 +17,18 @@
     var populateOutput = function populateOutput(response) {
       console.log(response);
 
-      var player = new window.Audio(),
-          blob = new Blob([response.textToSpeech], {type: 'audio/wav'});
+      var player = document.createElement('audio'),
+          blob = new Blob([response.textToSpeech], {type: 'audio/wav'}),
+          body = document.querySelector('body');
+
+      console.log(blob);
+      console.log(URL.createObjectURL(blob));
 
       player.src = URL.createObjectURL(blob);
-      player.play();
+
+      body.appendChild(player);
+
+
     };
 
     //////////////////////////////

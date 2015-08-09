@@ -20,7 +20,8 @@ var app = express(),
 // APIs
 var languageTranslation = require('./src/language-translation'),
     speechToText = require('./src/speech-to-text'),
-    textToSpeech = require('./src/text-to-speech');
+    textToSpeech = require('./src/text-to-speech'),
+    translateToSpeech = require('./src/translate-to-speech');
 
 // Ensure TMP exists
 fs.ensureDirSync('./tmp');
@@ -50,25 +51,7 @@ fromAudio = function fromAudio(input, res) {
     else {
       output.speechToText = response.results[response.result_index].alternatives[0];
 
-      params = {
-        'text': output.speechToText.transcript,
-        'source': 'en',
-        'target': 'fr'
-      };
-
-      // Translate Text
-      languageTranslation(params, function (err, response) {
-        if (err) {
-          res.send(500, {
-            'error': err
-          });
-        }
-        else {
-          output.languageTranslation = response;
-
-          res.send(JSON.stringify(output));
-        }
-      });
+      translateToSpeech(output, res);
     }
   });
 }

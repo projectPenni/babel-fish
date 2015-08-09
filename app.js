@@ -68,10 +68,11 @@ fromAudio = function fromAudio(input, res) {
       else {
         results = response.results[response.result_index].alternatives[0];
 
-        results.source = 'en';
-        results.target = 'fr';
-
-        languageTranslation(results, function (err, translation) {
+        languageTranslation({
+          'text': results.transcript,
+          'source': 'en',
+          'target': 'fr'
+        }, function (err, translation) {
           if (err) {
             res.send(500, {
               'error': err

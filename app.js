@@ -42,7 +42,8 @@ app.use(express.static(__dirname + '/public'));
 //////////////////////////////
 fromAudio = function fromAudio(input, res) {
   var s2t,
-      params;
+      params,
+      transcript;
 
   if (speechToText) {
     s2t = watson.speech_to_text({
@@ -64,7 +65,10 @@ fromAudio = function fromAudio(input, res) {
         });
       }
       else {
-        res.send(JSON.stringify(response, null, 2));
+        transcript = response.results[response.result_index].alternatives[0].transcript;
+        res.send(JSON.stringify({
+          'transcript': transcript
+        }));
       }
     });
   }

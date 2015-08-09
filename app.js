@@ -60,18 +60,16 @@ fromAudio = function fromAudio(input, res) {
 fromText = function fromText(input, res) {
   var params = {
     'text': 'My name is Sam Richard and I like chicken',
-    'source': 'en',
-    'target': 'es'
   }
 
-  languageTranslation(params, function (err, translation) {
+  textToSpeech(params, function (err, response) {
     if (err) {
       res.send(500, {
         'error': err
       });
     }
     else {
-      res.send(JSON.stringify(translation));
+      res.send(JSON.stringify(response));
     }
   });
 }

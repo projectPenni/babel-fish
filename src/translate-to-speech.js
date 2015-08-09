@@ -27,7 +27,7 @@ module.exports = function (output, res) {
       res.send(JSON.stringify(output));
 
       // params = {
-      //   'text': output.languageTranslation.translation
+      //   'text': response.translations[0].translation
       // };
 
       // textToSpeech(params, function (err, response) {

@@ -6,20 +6,84 @@
 
 // This application uses express as its web server
 // for more info, see: http://expressjs.com
-var express = require('express');
-
-// cfenv provides access to your Cloud Foundry environment
-// for more info, see: https://www.npmjs.com/package/cfenv
-var cfenv = require('cfenv');
+var express = require('express'),
+    cfenv = require('cfenv'),
+    fs = require('fs-extra'),
+    formidable = require('formidable');
 
 // create a new express server
-var app = express();
+var app = express(),
+    appEnv = cfenv.getAppEnv(),
+    fromAudio,
+    fromVideo;
+
+// Ensure TMP exists
+fs.ensureDirSync('./tmp');
 
 // serve the files out of ./public as our main files
 app.use(express.static(__dirname + '/public'));
 
-// get the app environment from Cloud Foundry
-var appEnv = cfenv.getAppEnv();
+//////////////////////////////
+// From Audio
+//////////////////////////////
+fromAudio = function fromAudio(input, res) {
+  res.send(JSON.stringify(input));
+}
+
+//////////////////////////////
+// From Video
+//////////////////////////////
+
+//////////////////////////////
+// Translate Post
+//////////////////////////////
+app.post('/translate/:from', function translateEndpoint (req, res) {
+  var result = {},
+      from = req.params.from;
+
+  var form = new formidable.IncomingForm();
+
+  form.encoding = 'utf-8';
+  form.uploadDir = './tmp';
+
+  form.on('error', function (err) {
+    console.log(err);
+  });
+
+  form.on('file', function (field, file) {
+    if (field === 'audio') {
+      var path = file.path,
+          size = file.size / 1000;
+
+      fs.renameSync(path, path + '.wav');
+      path += '.wav';
+      // console.log(Object.keys(file));
+      console.log(path);
+      console.log(size);
+
+      result.file = {
+        'path': path,
+        'size': size
+      }
+    }
+  });
+
+  form.on('end', function () {
+    if (from === 'audio') {
+      fromAudio(result, res);
+    }
+    else if (from === 'text') {
+      console.log(result);
+    }
+    else {
+      res.send(501, {
+        'error': 'Translation from ' + from + ' not supported'
+      });
+    }
+  });
+
+  form.parse(req);
+});
 
 // start server on the specified port and binding host
 app.listen(appEnv.port, function() {

@@ -18,9 +18,7 @@ var app = express(),
     fromText;
 
 // APIs
-var languageTranslation = require('./src/language-translation'),
-    speechToText = require('./src/speech-to-text'),
-    textToSpeech = require('./src/text-to-speech'),
+var speechToText = require('./src/speech-to-text'),
     translateToSpeech = require('./src/translate-to-speech');
 
 // Ensure TMP exists

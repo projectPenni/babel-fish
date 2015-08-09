@@ -1,5 +1,7 @@
 'use strict';
 
+var fs = require('fs-extra');
+
 var languageTranslation = require('./language-translation'),
     textToSpeech = require('./text-to-speech');
 
@@ -37,6 +39,11 @@ module.exports = function (output, res) {
         }
         else {
           output.textToSpeech = response;
+
+          if (output.speechToText.file) {
+            fs.removeSync(output.speechToText.file);
+            delete output.speechToText.file;
+          }
 
           res.send(JSON.stringify(output));
         }

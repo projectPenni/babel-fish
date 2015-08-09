@@ -27,7 +27,7 @@ app.use(express.static(__dirname + '/public'));
 // From Audio
 //////////////////////////////
 fromAudio = function fromAudio(input, res) {
-  input.envs = process.env.VCAP_SERVICES;
+  input.envs = JSON.parse(process.env.VCAP_SERVICES);
   res.send(JSON.stringify(input));
 }
 

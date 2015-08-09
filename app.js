@@ -50,8 +50,6 @@ fromAudio = function fromAudio(input, res) {
     else {
       output.speechToText = response.results[response.result_index].alternatives[0];
 
-      res.send(JSON.stringify(output));
-
       params = {
         'text': output.speechToText.transcript,
         'source': 'en',

@@ -14,8 +14,21 @@ var express = require('express'),
 // create a new express server
 var app = express(),
     appEnv = cfenv.getAppEnv(),
+    services,
     fromAudio,
     fromVideo;
+
+// APIs
+var speechToText = {},
+    textToSpeech = {},
+    translation = {};
+
+if (process.env.VCAP_SERVICES) {
+  services = JSON.parse(process.env.VCAP_SERVICES);
+  speechToText = services.speech_to_text[0].credentials;
+  textToSpeech = services.text_to_speech[0].credentials;
+  translation = services.language_translation[0].credentials;
+}
 
 // Ensure TMP exists
 fs.ensureDirSync('./tmp');
@@ -27,7 +40,7 @@ app.use(express.static(__dirname + '/public'));
 // From Audio
 //////////////////////////////
 fromAudio = function fromAudio(input, res) {
-  input.envs = JSON.parse(process.env.VCAP_SERVICES);
+  input.stt = speechToText;
   res.send(JSON.stringify(input));
 }
 

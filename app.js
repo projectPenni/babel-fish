@@ -53,24 +53,20 @@ fromAudio = function fromAudio(input, res) {
     });
 
     params = {
-      'audio': fs.createReadStream(input.path),
+      'audio': fs.createReadStream(input.file.path),
       'content_type': 'audio/l16; rate=44100'
     };
 
-    console.log(params);
-
-    // s2t.recognize(function (err, response) {
-    //   console.log(err);
-    //   console.log(response);
-    //   if (err) {
-    //     res.send(500, {
-    //       'error': err
-    //     });
-    //   }
-    //   else {
-    //     res.send(JSON.stringify(response, null, 2));
-    //   }
-    // });
+    s2t.recognize(params, function (err, response) {
+      if (err) {
+        res.send(500, {
+          'error': err
+        });
+      }
+      else {
+        res.send(JSON.stringify(response, null, 2));
+      }
+    });
   }
   else {
     res.send(JSON.stringify(input));

@@ -17,7 +17,8 @@ var app = express(),
     appEnv = cfenv.getAppEnv(),
     services,
     fromAudio,
-    fromVideo;
+    fromText,
+    languageTranslation;
 
 // APIs
 var speechToText,
@@ -66,12 +67,41 @@ fromAudio = function fromAudio(input, res) {
       }
       else {
         results = response.results[response.result_index].alternatives[0];
-        res.send(JSON.stringify(results));
+
+        results.source = 'en';
+        results.target = 'fr';
+
+        languageTranslation(results, function (err, translation) {
+          if (err) {
+            res.send(500, {
+              'error': err
+            });
+          }
+          else {
+            res.send(JSON.stringify(translation));
+          }
+        });
       }
     });
   }
   else {
     res.send(JSON.stringify(input));
+  }
+}
+
+languageTranslation = function languageTranslation(params, cb) {
+  var lt,
+      results;
+
+  if (translation) {
+    lt = watson.language_translation({
+      'username': translation.username,
+      'password': translation.password,
+      'url': translation.url,
+      'version': 'v1'
+    });
+
+    lt.translate(params, cb);
   }
 }
 

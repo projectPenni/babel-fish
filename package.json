@@ -1,7 +1,7 @@
 {
-	"name": "NodejsStarterApp",
+	"name": "Babel-Fish",
 	"version": "0.0.1",
-	"description": "A sample nodejs app for Bluemix",
+	"description": "Small, yellow, leech-like, and probably the oddest thing in the universe. Speech you put in comes out as translated text",
 	"scripts": {
 		"start": "node app.js"
 	},
@@ -12,5 +12,5 @@
 	"repository": {},
 	"engines": {
 		"node": "0.12.x"
-	} 
+	}
 }

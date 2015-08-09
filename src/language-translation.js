@@ -17,6 +17,6 @@ module.exports = function (params, cb) {
       'version': 'v2'
     });
 
-    languageTranslation(params, cb);
+    languageTranslation.translate(params, cb);
   }
 }

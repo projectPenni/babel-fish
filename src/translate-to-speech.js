@@ -24,7 +24,17 @@ module.exports = function (output, res) {
         'translation': response.translations[0].translation
       };
 
-      res.send(JSON.stringify(output));
+      params = {
+        'text': output.languageTranslation.translation,
+        'voice': 'fr-FR_ReneeVoice',
+        'accept': 'audio/wav'
+      }
+
+      textToSpeech(params, function (err, response) {
+        output.textToSpeech = response;
+
+        res.send(JSON.stringify(output));
+      });
     }
   });
 }

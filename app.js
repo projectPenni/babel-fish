@@ -50,6 +50,7 @@ fromAudio = function fromAudio(input, res) {
     }
     else {
       output.speechToText = response.results[response.result_index].alternatives[0];
+      output.speechToText.file = input.file.path;
 
       translateToSpeech(output, res);
     }

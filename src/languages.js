@@ -116,15 +116,12 @@ module.exports = function (from, res) {
                 added = false;
 
             sourceTarget.target.forEach(function (target) {
-              if (target === lang && !added) {
-                sourceTarget.voices.push(lang);
+              if (target === lang) {
+                if (sourceTarget.voices.indexOf(lang) < 0) {
+                  sourceTarget.voices.push(lang);
 
-                output.textToSpeech.push({
-                  'language': lang,
-                  'name': voice.language
-                });
-
-                added = true;
+                  output.textToSpeech.push(voice);
+                }
               }
             });
           });

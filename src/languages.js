@@ -111,7 +111,7 @@ module.exports = function (from, res) {
 
           voices = voices.voices;
 
-          output.textToSpeech = [];
+          output.textToSpeech = {};
 
           voices.forEach(function (voice) {
             var lang = voice.language.split('-').shift(),
@@ -122,11 +122,10 @@ module.exports = function (from, res) {
                 if (sourceTarget.voices.indexOf(lang) < 0) {
                   sourceTarget.voices.push(lang);
 
-                  output.textToSpeech.push({
+                  output.textToSpeech[lang] = {
                     'name': voice.name,
-                    'language': lang,
                     'desc': languages.getLanguageInfo(lang).nativeName
-                  });
+                  };
                 }
               }
             });

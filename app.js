@@ -43,6 +43,7 @@ fromAudio = function fromAudio(input, res) {
 
   params = {
     'audio': fs.createReadStream(input.file.path),
+    'model': input.source.model,
     'content_type': 'audio/wav'
   };
 

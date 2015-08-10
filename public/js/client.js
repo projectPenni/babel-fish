@@ -14,8 +14,8 @@
   // Set Available Languages
   //////////////////////////////
   var languages = new XMLHttpRequest(),
-      languagesURL = '/languages';
-      // languagesURL = '../tmp/languages.json';
+      // languagesURL = '/languages';
+      languagesURL = '../tmp/languages.json';
 
   languages.open('GET', languagesURL, true);
   languages.responseType = 'json';
@@ -46,6 +46,7 @@
     });
 
     source.innerHTML = options.source;
+    source.value = Object.keys(languages)[0];
     source.setAttribute('data-model', languages[Object.keys(languages)[0]].model);
     setTranslation();
 
@@ -99,6 +100,8 @@
             blob,
             player;
 
+
+
         formData.append('audio', this.response);
         formData.append('source', JSON.stringify({
           'code': source.value,
@@ -109,7 +112,8 @@
           'voice': target.options[target.selectedIndex].getAttribute('data-voice')
         }));
 
-        console.log(formData.get('target'));
+        console.log('source', formData.get('source'));
+        console.log('target', formData.get('target'));
 
         xhr.open('POST', 'translate/audio', true);
         xhr.responseType = 'json';

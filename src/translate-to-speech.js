@@ -8,8 +8,8 @@ var languageTranslation = require('./language-translation'),
 module.exports = function (output, res) {
   var params = {
     'text': output.speechToText.transcript,
-    'source': 'en',
-    'target': 'fr'
+    'source': output.formData.source.code,
+    'target': output.formData.target.code
   };
 
   // Translate Text
@@ -28,7 +28,7 @@ module.exports = function (output, res) {
 
       params = {
         'text': output.languageTranslation.translation,
-        'voice': 'fr-FR_ReneeVoice',
+        'voice': output.formData.target.voice,
         'accept': 'audio/wav'
       };
 

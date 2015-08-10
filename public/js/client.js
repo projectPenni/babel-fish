@@ -113,6 +113,7 @@
       target.disabled = true;
       body.setAttribute('data-disabled', true);
       microphone.setAttribute('data-disabled', true);
+      translated.innerHTML = '';
 
       request.open('GET', url, true);
       request.responseType = 'blob';

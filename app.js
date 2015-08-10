@@ -21,8 +21,14 @@ var app = express(),
 var speechToText = require('./src/speech-to-text'),
     translateToSpeech = require('./src/translate-to-speech');
 
+var clean = require('./src/clean');
+
 // Ensure TMP exists
 fs.ensureDirSync('./tmp');
+fs.ensureDirSync('./public/responses');
+
+// Start cleaning
+clean();
 
 // serve the files out of ./public as our main files
 app.use(express.static(__dirname + '/public'));

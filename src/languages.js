@@ -15,6 +15,10 @@ module.exports = function (from, res) {
   var textToSpeech,
       speechToText,
       languageTranslation,
+      sourceTarget = {
+        'source': [],
+        'target': []
+      },
       output = {};
 
   if (credentials) {
@@ -57,6 +61,8 @@ module.exports = function (from, res) {
             'language': model.language,
             'description': model.description.replace(' broadband model.', '')
           });
+
+
         }
       });
 
@@ -67,9 +73,33 @@ module.exports = function (from, res) {
           });
         }
 
+        models = models.models;
+
         output.languageTranslation = [];
 
-        output.languageTranslation = models;
+        output.speechToText.forEach(function (speech) {
+          var lang = speech.language.split('-').shift(),
+              added = false;
+
+          models.forEach(function (model) {
+            if (model.source === lang) {
+              if (!added) {
+                sourceTarget.source.push(lang);
+                added = true;
+              }
+              if (model.model_id === lang + '-' + model.target) {
+                sourceTarget.target.push(model.target);
+                output.languageTranslation.push({
+                  'model': model.model_id,
+                  'source': model.source,
+                  'target': model.target
+                });
+              }
+            }
+          });
+        });
+
+        output.sourceTarget = sourceTarget;
 
         res.send(output);
       });

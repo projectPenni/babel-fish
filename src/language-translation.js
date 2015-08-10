@@ -7,7 +7,7 @@ if (process.env.VCAP_SERVICES) {
   credentials = JSON.parse(process.env.VCAP_SERVICES).language_translation[0].credentials;
 }
 
-module.exports = function (params, cb) {
+module.exports = function () {
   var languageTranslation;
 
   if (credentials) {
@@ -17,6 +17,6 @@ module.exports = function (params, cb) {
       'version': 'v2'
     });
 
-    languageTranslation.translate(params, cb);
+    return languageTranslation;
   }
 }

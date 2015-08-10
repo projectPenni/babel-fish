@@ -14,7 +14,8 @@ if (process.env.VCAP_SERVICES) {
 module.exports = function (from, res) {
   var textToSpeech,
       speechToText,
-      languageTranslation;
+      languageTranslation,
+      output = {};
 
   if (credentials) {
     speechToText = watson.speech_to_text({
@@ -38,18 +39,30 @@ module.exports = function (from, res) {
     });
 
 
-    if (from === 'audio') {
-      speechToText.getModels({}, function (err, models) {
-        if (err) {
-          res.send(500, {
-            'error': err
+    speechToText.getModels({}, function (err, models) {
+      if (err) {
+        res.send(500, {
+          'error': err
+        });
+      }
+
+      models = models.models;
+
+      output.speechToText = []
+
+      models.forEach(function (model) {
+        if (model.name.indexOf('Broadband') >= 0) {
+          output.speechToText.push({
+            'name': model.name,
+            'language': model.language,
+            'description': model.description.replace(' broadband model.', '')
           });
         }
-
-        // models = models.models;
-
-        res.send(models);
       });
-    }
+
+      res.send(output);
+    });
+
+
   }
 }

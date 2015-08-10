@@ -138,7 +138,7 @@ module.exports = function (from, res) {
               if (audio.language.indexOf(source) >= 0) {
                 results[audio.language] = {
                   'name': audio.name,
-                  'desc': audio.desc,
+                  'desc': languages.getLanguageInfo(source).nativeName
                   'code': source,
                   'targets': []
                 }
@@ -148,7 +148,8 @@ module.exports = function (from, res) {
                     if (sourceTarget.voices.indexOf(translate.target) >= 0) {
                       results[audio.language].targets.push({
                         'code': translate.target,
-                        'desc': languages.getLanguageInfo(translate.target).nativeName
+                        'desc': output.textToSpeech[translate.target].desc,
+                        'voice': output.textToSpeech[translate.target].name
                       });
                     }
                   }

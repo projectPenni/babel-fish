@@ -13,12 +13,14 @@
   var source,
       target,
       microphone,
+      translated,
       body;
 
   window.addEventListener('DOMContentLoaded', function () {
     source = document.getElementById('translate--source');
     target = document.getElementById('translate--target');
     microphone = document.getElementById('record');
+    translated = document.querySelector('.translated');
     body = document.querySelector('body');
   });
 
@@ -78,10 +80,21 @@
     var populateOutput = function populateOutput(response) {
       console.log(response);
 
-      var player = new Audio();;
+      var player = new Audio(),
+          translation = '';
 
       player.src = response.textToSpeech;
+
+      translation += '<p class="translated--title">Input Text:</p><p class="translated--input">' + response.speechToText.transcript + '</p>';
+      translation += '<p class="translated--title">Translated Text:</p><p class="translated--output">' + response.languageTranslation.translation + '</p>';
+      translation += '<audio controls class="translated--audio" src="' + response.textToSpeech + '">';
+
+      // translated
+
       player.play();
+
+      console.log(translated);
+      translated.innerHTML = translation;
 
       source.disabled = false;
       target.disabled = false;

@@ -853,10 +853,28 @@ pre[class*=" language-"] {
   .record--footer {
     padding: 2rem; }
 
+.translated {
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto; }
+  .translated--title {
+    font-weight: bold; }
+  .translated--output,
+  .translated--input {
+    margin-top: 0; }
+  .translated--audio {
+    display: block;
+    margin-left: auto;
+    margin-right: auto; }
+
 .translate {
   width: 80%;
   margin-left: auto;
   margin-right: auto; }
+  .translate:after {
+    content: "";
+    display: table;
+    clear: both; }
   .translate--source,
   .translate--target {
     width: calc(50% - 1rem);

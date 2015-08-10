@@ -46,7 +46,7 @@ module.exports = function (from, res) {
           });
         }
 
-        models = models.models;
+        // models = models.models;
 
         res.send(models);
       });

@@ -19,7 +19,8 @@ var app = express(),
 
 // APIs
 var speechToText = require('./src/speech-to-text'),
-    translateToSpeech = require('./src/translate-to-speech');
+    translateToSpeech = require('./src/translate-to-speech'),
+    languages = require('./src/languages');
 
 var clean = require('./src/clean');
 
@@ -87,16 +88,14 @@ fromText = function fromText(input, res) {
 app.get('/languages/:from', function languageEndpoint (req, res) {
   var from = req.params.from;
 
-  if (from === 'audio') {
 
-  }
-  else if (from == 'text') {
-
-  }
-  else {
+  if (from !== 'audio' && from !== 'text') {
     res.send(501, {
       'error': 'Translation from ' + from + ' not supported'
     });
+  }
+  else {
+    languages(from, res);
   }
 });
 

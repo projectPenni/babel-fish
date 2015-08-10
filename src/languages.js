@@ -138,7 +138,7 @@ module.exports = function (from, res) {
               if (audio.language.indexOf(source) >= 0) {
                 results[audio.language] = {
                   'name': audio.name,
-                  'desc': languages.getLanguageInfo(source).nativeName
+                  'desc': languages.getLanguageInfo(source).nativeName,
                   'code': source,
                   'targets': []
                 }

@@ -13,7 +13,7 @@ module.exports = function (output, res) {
   };
 
   // Translate Text
-  languageTranslation.translate(params, function (err, response) {
+  languageTranslation(params, function (err, response) {
     if (err) {
       res.send(500, {
         'error': err
@@ -32,7 +32,7 @@ module.exports = function (output, res) {
         'accept': 'audio/wav'
       };
 
-      textToSpeech.synthesize(params, function (err, response) {
+      textToSpeech(params, function (err, response) {
         if (err) {
           res.send(500, {
             'error': err

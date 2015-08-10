@@ -46,7 +46,7 @@ fromAudio = function fromAudio(input, res) {
   };
 
   // Speech to Text
-  speechToText.recognize(params, function (err, response) {
+  speechToText(params, function (err, response) {
     if (err) {
       res.send(500, {
         'error': err
@@ -80,25 +80,6 @@ fromText = function fromText(input, res) {
     }
   });
 }
-
-//////////////////////////////
-// Get Languages
-//////////////////////////////
-app.get('/languages/:from', function languageEndpoint (req, res) {
-  var from = req.params.from;
-
-  if (from === 'audio') {
-
-  }
-  else if (from == 'text') {
-
-  }
-  else {
-    res.send(501, {
-      'error': 'Translation from ' + from + ' not supported'
-    });
-  }
-});
 
 //////////////////////////////
 // Translate Post

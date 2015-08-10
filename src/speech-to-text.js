@@ -7,7 +7,7 @@ if (process.env.VCAP_SERVICES) {
   credentials = JSON.parse(process.env.VCAP_SERVICES).speech_to_text[0].credentials;
 }
 
-module.exports = function () {
+module.exports = function (params, cb) {
   var speechToText;
 
   if (credentials) {
@@ -18,6 +18,6 @@ module.exports = function () {
       'version': 'v1'
     });
 
-    return speechToText;
+    speechToText.recognize(params, cb);
   }
 }

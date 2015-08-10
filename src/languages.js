@@ -134,6 +134,19 @@ module.exports = function (from, res) {
 
           // results
 
+          sourceTarget.source.forEach(function (source) {
+            output.speechToText.forEach(function (audio) {
+              if (audio.language.indexOf(source) >= 0) {
+                results[audio.language] = {
+                  'name': audio.name,
+                  'desc': audio.desc,
+                  'code': source,
+                  'targets': []
+                }
+              }
+            });
+          });
+
           // sourceTarget.source.forEach(function (source) {
           //   output.textToSpeech.forEach(function (s2t) {
           //     if (s2t.indexOf(source) >= 0) {

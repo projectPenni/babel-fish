@@ -91,7 +91,13 @@ fromText = function fromText(input, res) {
 // Get Languages
 //////////////////////////////
 app.get('/languages', function languageEndpoint (req, res) {
-  languages(res);
+  if (appEnv.isLocal) {
+    var sample = {"es":{"model":"es-ES_BroadbandModel","code":"es","desc":"Español","targets":[{"code":"en","desc":"English","voice":"en-US_MichaelVoice"}]},"en":{"model":"en-US_BroadbandModel","code":"en","desc":"English","targets":[{"code":"es","desc":"Español","voice":"es-ES_LauraVoice"},{"code":"fr","desc":"Français","voice":"fr-FR_ReneeVoice"}]}};
+    res.send(sample);
+  }
+  else {
+    languages(res);
+  }
 });
 
 //////////////////////////////

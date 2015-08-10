@@ -57,6 +57,10 @@ fromAudio = function fromAudio(input, res) {
       output.speechToText = response.results[response.result_index].alternatives[0];
       output.speechToText.file = input.file.path;
 
+      delete input.file;
+
+      output.formData = input;
+
       translateToSpeech(output, res);
     }
   });
@@ -106,7 +110,12 @@ app.post('/translate/:from', function translateEndpoint (req, res) {
   });
 
   form.on('field', function (field, value) {
-    result[field] = value;
+    try {
+      result[field] = JSON.parse(value);
+    }
+    catch (e) {
+      result[field] = value;
+    }
   });
 
   form.on('file', function (field, file) {

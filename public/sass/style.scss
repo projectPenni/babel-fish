@@ -1,3 +1,109 @@
-body {
-  background: red;
+@import "toolkit";
+
+// Settings Go here
+
+@import "watson-design-guide/patterns/watson-patterns";
+
+#record {
+  display: inline-block;
+  position: relative;
+  transform: translateX(-50%);
+  left: 50%;
+}
+
+.record {
+  margin-top: 0;
+  background: color('neutral white', 2);
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+
+  &--title {
+    @extend %base--h1;
+    text-align: center;
+    margin-top: 2rem;
+  }
+
+  &--area {
+    flex: 1;
+  }
+
+  &--footer {
+    padding: 2rem;
+  }
+}
+
+.translate {
+
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+
+  &--source,
+  &--target {
+    @extend %base--select;
+    width: calc(50% - 1rem);
+    float: left;
+  }
+
+  &--source {
+    margin-right: 1rem;
+  }
+
+  &--target {
+    margin-top: 0;
+    margin-left: 1rem;
+  }
+}
+
+.iconic-microphone {
+  fill: color('cool gray', 7);
+
+  &--head-top {
+    fill: color('cool gray', 5);
+  }
+  [data-recording] & {
+    fill: color('warm gray', 7);
+
+    &-head-top {
+      fill: color('warm gray', 5);
+      animation: pulse 2s ease-in-out infinite;
+    }
+  }
+
+
+  &-head-button {
+    fill: color('green', 5);
+    [data-recording] & {
+      fill: color('red', 5);
+      animation: glow 1.5s ease-in-out infinite;
+      z-index: 100;
+    }
+  }
+}
+
+@keyframes pulse {
+  $amount: .015;
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(#{1 + $amount}) translateX(#{-100% * $amount}) translateY(#{-100% * $amount});
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes glow {
+  from {
+    stroke: color('red', 4) !important;
+    stroke-opacity: 1;
+    stroke-width: 1;
+  }
+  to {
+    stroke: color('red', 4) !important;
+    stroke-opacity: 0;
+    stroke-width: 75;
+  }
 }

@@ -143,12 +143,27 @@ app.post('/translate/:from', function translateEndpoint (req, res) {
     }
   });
 
+  console.log(appEnv);
+
   form.on('end', function () {
     if (from === 'audio') {
-      fromAudio(result, res);
+      if (appEnv.isLocal) {
+        var sample = {"speechToText": {"confidence": 0.9110918045043945,"transcript": "hello my name is sam and i like chicken "},"formData": {"source": {"code": "en","model": "en-US_BroadbandModel"},"target": {"code": "fr","voice": "fr-FR_ReneeVoice"}},"languageTranslation": {"character_count": 39,"word_count": 9,"translation": "Bonjour mon nom est sam et i comme poulet"},"textToSpeech": "/responses/tmp/upload_c88ca85828569f7776851387e83747e6.wav"};
+        res.send(sample);
+      }
+      else {
+        fromAudio(result, res);
+      }
+
     }
     else if (from === 'text') {
-      fromText(result, res);
+      if (appEnv.isLocal) {
+        var sample = {"es":{"model":"es-ES_BroadbandModel","code":"es","desc":"Español","targets":[{"code":"en","desc":"English","voice":"en-US_MichaelVoice"}]},"en":{"model":"en-US_BroadbandModel","code":"en","desc":"English","targets":[{"code":"es","desc":"Español","voice":"es-ES_LauraVoice"},{"code":"fr","desc":"Français","voice":"fr-FR_ReneeVoice"}]}};
+        res.send(sample);
+      }
+      else {
+        fromText(result, res);
+      }
     }
     else {
       res.send(501, {

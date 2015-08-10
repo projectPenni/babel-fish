@@ -2,6 +2,8 @@
 
 var gulp = require('gulp'),
     sass = require('gulp-sass'),
+    autoprefixer = require('gulp-autoprefixer'),
+    nsio = require('node-sass-import-once'),
     run = require('gulp-run'),
     browserSync = require('browser-sync').create();
 
@@ -10,7 +12,15 @@ var gulp = require('gulp'),
 //////////////////////////////
 gulp.task('sass', function () {
   gulp.src('./public/sass/**/*.scss')
-    .pipe(sass().on('error', sass.logError))
+    .pipe(sass({
+      'importer': nsio,
+      'importOnce': {
+        'index': true,
+        'css': true,
+        'bower': true
+      }
+    }).on('error', sass.logError))
+    .pipe(autoprefixer())
     .pipe(gulp.dest('./public/css'))
     .pipe(browserSync.stream());
 });

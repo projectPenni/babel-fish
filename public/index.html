@@ -9,20 +9,27 @@
   </head>
 
   <body>
-    <h1>Welcome to Babel Fish</h1>
-
-    <form action="" id="recordAudio">
-      <div class="translate">
-        <select name="translate--source" id="translate--source" class="translate--source"></select>
-        <select name="translate--target" id="translate--target" class="translate--target"></select>
+    <form action="" id="recordAudio" class="record">
+      <div class="record--area">
+        <h1 class="record--title">Welcome to Babel Fish</h1>
+        <div class="translate">
+          <select name="translate--source" id="translate--source" class="translate--source"></select>
+          <select name="translate--target" id="translate--target" class="translate--target"></select>
+        </div>
       </div>
-      <input id="record" type="button" value="Record"></input>
+
+      <div class="record--footer">
+        <a id="record">
+          <img src="images/microphone.svg" class="iconic" alt="Record">
+        </a>
+      </div>
     </form>
 
 
 
     <script src="https://cdn.polyfill.io/v1/polyfill.min.js"></script>
     <script src="bower_components/Recorderjs/recorder.js"></script>
+    <script src="js/iconic.min.js"></script>
     <script src="js/client.js"></script>
   </body>
 </html>

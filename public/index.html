@@ -11,10 +11,15 @@
   <body>
     <h1>Welcome to Babel Fish</h1>
 
+    <form action="" id="recordAudio">
+      <div class="translate">
+        <select name="translate--source" id="translate--source" class="translate--source"></select>
+        <select name="translate--target" id="translate--target" class="translate--target"></select>
+      </div>
+      <input id="record" type="button" value="Record"></input>
+    </form>
 
-    <input id="record" type="button" value="Record"></input>
 
-    <input id="hello" type="button" value="Hello"></input>
 
     <script src="https://cdn.polyfill.io/v1/polyfill.min.js"></script>
     <script src="bower_components/Recorderjs/recorder.js"></script>

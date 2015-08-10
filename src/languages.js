@@ -136,17 +136,16 @@ module.exports = function (res) {
           sourceTarget.source.forEach(function (source) {
             output.speechToText.forEach(function (audio) {
               if (audio.language.indexOf(source) >= 0) {
-                results[audio.language] = {
+                results[source] = {
                   'model': audio.name,
                   'desc': languages.getLanguageInfo(source).nativeName,
-                  'code': source,
                   'targets': []
                 }
 
                 output.languageTranslation.forEach(function (translate) {
                   if (translate.source === source) {
                     if (sourceTarget.voices.indexOf(translate.target) >= 0) {
-                      results[audio.language].targets.push({
+                      results[source].targets.push({
                         'code': translate.target,
                         'desc': output.textToSpeech[translate.target].desc,
                         'voice': output.textToSpeech[translate.target].name

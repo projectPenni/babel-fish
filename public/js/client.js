@@ -101,11 +101,11 @@
 
         formData.append('audio', this.response);
         formData.append('source', JSON.stringify({
-          'code': source.value ? source.value : source.getAttribute('data-model').split('-').shift(),
+          'code': source.value,
           'model': source.getAttribute('data-model')
         }));
         formData.append('target', JSON.stringify({
-          'code': target.value ? target.value : target.getAttribute('data-model').split('-').shift(),
+          'code': target.value,
           'voice': target.options[target.selectedIndex].getAttribute('data-voice')
         }));
 

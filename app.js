@@ -82,6 +82,25 @@ fromText = function fromText(input, res) {
 }
 
 //////////////////////////////
+// Get Languages
+//////////////////////////////
+app.get('/languages/:from', function languageEndpoint (req, res) {
+  var from = req.params.from;
+
+  if (from === 'audio') {
+
+  }
+  else if (from == 'text') {
+
+  }
+  else {
+    res.send(501, {
+      'error': 'Translation from ' + from + ' not supported'
+    });
+  }
+});
+
+//////////////////////////////
 // Translate Post
 //////////////////////////////
 app.post('/translate/:from', function translateEndpoint (req, res) {

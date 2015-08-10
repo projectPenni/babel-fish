@@ -826,6 +826,8 @@ pre[class*=" language-"] {
       -ms-transform: translateX(-50%);
           transform: translateX(-50%);
   left: 50%; }
+  #record[data-disabled] {
+    opacity: .5; }
 
 .record {
   margin-top: 0;
@@ -865,9 +867,29 @@ pre[class*=" language-"] {
     margin-top: 0;
     margin-left: 1rem; }
 
+.loader {
+  display: none;
+  top: 50%;
+  left: 50%;
+  position: fixed;
+  -webkit-transform: translateY(-50%) translateX(-50%);
+  -ms-transform: translateY(-50%) translateX(-50%);
+  transform: translateY(-50%) translateX(-50%); }
+  [data-disabled] .loader {
+    display: block; }
+  .loader > * {
+    display: inline-block;
+    position: relative;
+    -webkit-transform: translateX(-50%);
+        -ms-transform: translateX(-50%);
+            transform: translateX(-50%);
+    left: 50%; }
+  .loader--spinner {
+    stroke: #d74108; }
+
 .iconic-microphone {
   fill: #3c4646; }
-  .iconic-microphone--head-top {
+  .iconic-microphone-head-top {
     fill: #6d7777; }
   [data-recording] .iconic-microphone {
     fill: #504646; }

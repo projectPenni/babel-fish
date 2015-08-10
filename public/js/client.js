@@ -10,6 +10,18 @@
                          navigator.mozGetUserMedia;
   window.URL = window.URL || window.webkitURL;
 
+  var source,
+      target,
+      microphone,
+      body;
+
+  window.addEventListener('DOMContentLoaded', function () {
+    source = document.getElementById('translate--source');
+    target = document.getElementById('translate--target');
+    microphone = document.getElementById('record');
+    body = document.querySelector('body');
+  });
+
   //////////////////////////////
   // Set Available Languages
   //////////////////////////////
@@ -22,8 +34,6 @@
   languages.onload = function () {
 
     var languages = this.response,
-        source = document.getElementById('translate--source'),
-        target = document.getElementById('translate--target'),
         options = {
           'source': '',
           'target': ''
@@ -55,13 +65,6 @@
       e.target.setAttribute('data-model', languages[key].model)
     });
 
-    target.addEventListener('change', function (e) {
-      console.log(e.target)
-      console.log(e.target.options[e.target.selectedIndex].getAttribute('data-voice'));
-    });
-
-    console.log(languages);
-
   }
   languages.send();
 
@@ -75,11 +78,15 @@
     var populateOutput = function populateOutput(response) {
       console.log(response);
 
-      var player = new Audio(),
-          body = document.querySelector('body');
+      var player = new Audio();;
 
       player.src = response.textToSpeech;
       player.play();
+
+      source.disabled = false;
+      target.disabled = false;
+      body.removeAttribute('data-disabled');
+      microphone.removeAttribute('data-disabled');
     };
 
     //////////////////////////////
@@ -89,13 +96,16 @@
       var url = URL.createObjectURL(blob),
           request = new XMLHttpRequest();
 
+      source.disabled = true;
+      target.disabled = true;
+      body.setAttribute('data-disabled', true);
+      microphone.setAttribute('data-disabled', true);
+
       request.open('GET', url, true);
       request.responseType = 'blob';
       request.onload = function () {
         var formData = new FormData(),
             xhr = new XMLHttpRequest(),
-            source = document.getElementById('translate--source'),
-            target = document.getElementById('translate--target'),
             blob,
             player;
 
@@ -108,9 +118,6 @@
           'code': target.value,
           'voice': target.options[target.selectedIndex].getAttribute('data-voice')
         }));
-
-        console.log('source', formData.get('source'));
-        console.log('target', formData.get('target'));
 
         xhr.open('POST', 'translate/audio', true);
         xhr.responseType = 'json';
@@ -143,9 +150,9 @@
     // Button to Record
     //////////////////////////////
     window.addEventListener('DOMContentLoaded', function () {
-      var button = document.getElementById('record'),
+      // var button = document.getElementById('record'),
           // hello = document.getElementById('hello'),
-          url;
+      var url;
 
       // hello.addEventListener('click', function () {
       //   var formData = new FormData(),
@@ -164,22 +171,24 @@
       //   xhr.send(formData);
       // });
 
-      button.addEventListener('click', function () {
-        if (button.getAttribute('data-recording')) {
-          button.removeAttribute('data-recording');
-          button.value = 'Record';
-          recorder && recorder.stop();
-          recorder.exportWAV();
-          recorder.clear();
-          console.log('Done Recording');
+      microphone.addEventListener('click', function () {
+        if (!microphone.hasAttribute('data-disabled')) {
+          if (microphone.getAttribute('data-recording')) {
+            microphone.removeAttribute('data-recording');
+            microphone.value = 'Record';
+            recorder && recorder.stop();
+            recorder.exportWAV();
+            recorder.clear();
+            console.log('Done Recording');
+          }
+          else {
+            microphone.setAttribute('data-recording', true);
+            microphone.value = 'Stop Recording';
+            recorder && recorder.record();
+            console.log('Recording...');
+          }
         }
-        else {
-          button.setAttribute('data-recording', true);
-          button.value = 'Stop Recording';
-          recorder && recorder.record();
-          console.log('Recording...');
-        }
-      })
+      });
     });
   }
 }(window.Recorder));

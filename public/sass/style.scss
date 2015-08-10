@@ -9,6 +9,10 @@
   position: relative;
   transform: translateX(-50%);
   left: 50%;
+
+  &[data-disabled] {
+    opacity: .5;
+  }
 }
 
 .record {
@@ -56,10 +60,31 @@
   }
 }
 
+.loader {
+  display: none;
+
+  [data-disabled] & {
+    display: block;
+  }
+
+  @include absolute-center($fixed: true);
+
+  > * {
+    display: inline-block;
+    position: relative;
+    transform: translateX(-50%);
+    left: 50%;
+  }
+
+  &--spinner {
+    stroke: color('orange', 5);
+  }
+}
+
 .iconic-microphone {
   fill: color('cool gray', 7);
 
-  &--head-top {
+  &-head-top {
     fill: color('cool gray', 5);
   }
   [data-recording] & {

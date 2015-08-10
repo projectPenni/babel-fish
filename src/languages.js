@@ -65,7 +65,7 @@ module.exports = function (from, res) {
           output.speechToText.push({
             'name': model.name,
             'language': model.language,
-            'description': model.description.replace(' broadband model.', '')
+            'desc': languages.getLanguageInfo(model.language).nativeName
           });
 
 
@@ -128,7 +128,7 @@ module.exports = function (from, res) {
                   output.textToSpeech.push({
                     'name': voice.name,
                     'language': lang,
-                    'desc': languages.getLanguageInfo(lang)
+                    'desc': languages.getLanguageInfo(lang).nativeName
                   });
                 }
               }

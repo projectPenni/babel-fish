@@ -38,12 +38,14 @@ module.exports = function (output, res) {
           });
         }
         else {
-          output.textToSpeech = response;
 
           if (output.speechToText.file) {
+            output.textToSpeech = '/responses/' + output.speechToText.file;
             fs.removeSync(output.speechToText.file);
             delete output.speechToText.file;
           }
+
+          fs.outputFileSync('../public' + output.textToSpeech, response);
 
           res.send(JSON.stringify(output));
         }

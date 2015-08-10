@@ -18,13 +18,12 @@
       console.log(response);
 
       var player = document.createElement('audio'),
-          blob = new Blob([response.textToSpeech], {type: 'audio/wav'}),
           body = document.querySelector('body');
 
       console.log(blob);
       console.log(URL.createObjectURL(blob));
 
-      player.src = URL.createObjectURL(blob);
+      player.src = response.textToSpeech;
 
       body.appendChild(player);
 

@@ -17,12 +17,11 @@
     var populateOutput = function populateOutput(response) {
       console.log(response);
 
-      var player = document.createElement('audio'),
+      var player = new Audio(),
           body = document.querySelector('body');
 
       player.src = response.textToSpeech;
-
-      body.appendChild(player);
+      player.play();
     };
 
     //////////////////////////////

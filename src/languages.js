@@ -12,7 +12,7 @@ if (process.env.VCAP_SERVICES) {
   });
 }
 
-module.exports = function (from, res) {
+module.exports = function (res) {
   var textToSpeech,
       speechToText,
       languageTranslation,
@@ -137,7 +137,7 @@ module.exports = function (from, res) {
             output.speechToText.forEach(function (audio) {
               if (audio.language.indexOf(source) >= 0) {
                 results[audio.language] = {
-                  'name': audio.name,
+                  'model': audio.name,
                   'desc': languages.getLanguageInfo(source).nativeName,
                   'code': source,
                   'targets': []

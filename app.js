@@ -86,7 +86,7 @@ fromText = function fromText(input, res) {
 // Get Languages
 //////////////////////////////
 app.get('/languages', function languageEndpoint (req, res) {
-  languages(from, res);
+  languages(res);
 });
 
 //////////////////////////////

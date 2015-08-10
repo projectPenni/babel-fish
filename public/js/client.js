@@ -99,15 +99,13 @@
             blob,
             player;
 
-
-
         formData.append('audio', this.response);
         formData.append('source', JSON.stringify({
-          'code': source.value,
+          'code': source.value ? source.value : source.getAttribute('data-model').split('-').shift(),
           'model': source.getAttribute('data-model')
         }));
         formData.append('target', JSON.stringify({
-          'code': target.value,
+          'code': target.value ? target.value : target.getAttribute('data-model').split('-').shift(),
           'voice': target.options[target.selectedIndex].getAttribute('data-voice')
         }));
 

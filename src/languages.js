@@ -1,6 +1,7 @@
 'use strict';
 
 var watson = require('watson-developer-cloud'),
+    languages = require('languages'),
     credentials = {},
     services;
 
@@ -20,7 +21,11 @@ module.exports = function (from, res) {
         'target': [],
         'voices': []
       },
-      output = {};
+      output = {},
+      results = {
+        'source': [],
+        'target': []
+      };
 
   if (credentials) {
     speechToText = watson.speech_to_text({
@@ -120,11 +125,17 @@ module.exports = function (from, res) {
                 if (sourceTarget.voices.indexOf(lang) < 0) {
                   sourceTarget.voices.push(lang);
 
-                  output.textToSpeech.push(voice);
+                  output.textToSpeech.push({
+                    'name': voice.name,
+                    'language': lang,
+                    'desc': languages.getLanguageInfo(lang)
+                  });
                 }
               }
             });
           });
+
+          // results
 
           output.sourceTarget = sourceTarget;
 

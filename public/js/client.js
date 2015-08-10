@@ -14,8 +14,8 @@
   // Set Available Languages
   //////////////////////////////
   var languages = new XMLHttpRequest(),
-      // languagesURL = '/languages';
-      languagesURL = '../tmp/languages.json';
+      languagesURL = '/languages';
+      // languagesURL = '../tmp/languages.json';
 
   languages.open('GET', languagesURL, true);
   languages.responseType = 'json';

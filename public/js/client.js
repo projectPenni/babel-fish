@@ -46,7 +46,6 @@
     });
 
     source.innerHTML = options.source;
-    source.value = Object.keys(languages)[0];
     source.setAttribute('data-model', languages[Object.keys(languages)[0]].model);
     setTranslation();
 

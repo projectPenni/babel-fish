@@ -99,9 +99,21 @@ module.exports = function (from, res) {
           });
         });
 
-        output.sourceTarget = sourceTarget;
+        textToSpeech.voices({}, function (err, voices) {
+          if (err) {
+            res.send(500, {
+              'error': err
+            });
+          }
 
-        res.send(output);
+          output.textToSpeech = voices;
+
+          output.sourceTarget = sourceTarget;
+
+          res.send(output);
+        });
+
+
       });
 
 

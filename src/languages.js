@@ -143,6 +143,17 @@ module.exports = function (from, res) {
                   'code': source,
                   'targets': []
                 }
+
+                output.languageTranslation.forEach(function (translate) {
+                  if (translate.source === source) {
+                    if (sourceTarget.voices.indexOf(translate.target) >= 0) {
+                      results[audio.language].targets.push({
+                        'code': translate.target,
+                        'desc': languages.getLanguageInfo(translate.target).nativeName
+                      });
+                    }
+                  }
+                });
               }
             });
           });

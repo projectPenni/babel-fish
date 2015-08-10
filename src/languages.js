@@ -117,7 +117,7 @@ module.exports = function (from, res) {
 
             sourceTarget.target.forEach(function (target) {
               if (target === lang && !added) {
-                sourceTarget.voice.push(lang);
+                sourceTarget.voices.push(lang);
 
                 output.textToSpeech.push({
                   'language': lang,

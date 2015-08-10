@@ -135,7 +135,7 @@ module.exports = function (from, res) {
           // results
 
           sourceTarget.source.forEach(function (source) {
-            output.speechToText.forEach(function (s2t)) {
+            output.speechToText.forEach(function (s2t) {
               if (s2t.indexOf(source) >= 0) {
                 results[s2t.language] = {
                   'name': s2t.name,

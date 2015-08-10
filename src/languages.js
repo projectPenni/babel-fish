@@ -17,7 +17,8 @@ module.exports = function (from, res) {
       languageTranslation,
       sourceTarget = {
         'source': [],
-        'target': []
+        'target': [],
+        'voices': []
       },
       output = {};
 
@@ -106,7 +107,27 @@ module.exports = function (from, res) {
             });
           }
 
-          output.textToSpeech = voices;
+          voices = voices.voices;
+
+          output.textToSpeech = [];
+
+          voices.forEach(function (voice) {
+            var lang = voice.language.split('-').shift(),
+                added = false;
+
+            sourceTarget.target.forEach(function (target) {
+              if (target === lang && !added) {
+                sourceTarget.voice.push(lang);
+
+                output.textToSpeech.push({
+                  'language': lang,
+                  'name': voice.language
+                });
+
+                added = true;
+              }
+            });
+          });
 
           output.sourceTarget = sourceTarget;
 

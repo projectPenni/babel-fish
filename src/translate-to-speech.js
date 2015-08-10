@@ -45,7 +45,7 @@ module.exports = function (output, res) {
             delete output.speechToText.file;
           }
 
-          fs.outputFileSync('../public' + output.textToSpeech, response);
+          fs.outputFileSync('public' + output.textToSpeech, response);
 
           res.send(JSON.stringify(output));
         }

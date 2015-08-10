@@ -60,7 +60,21 @@ module.exports = function (from, res) {
         }
       });
 
-      res.send(output);
+      languageTranslation.getModels({}, function (err, models) {
+        if (err) {
+          res.send(500, {
+            'error': err
+          });
+        }
+
+        output.languageTranslation = [];
+
+        output.languageTranslation = models;
+
+        res.send(output);
+      });
+
+
     });
 
 

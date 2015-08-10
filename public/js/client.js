@@ -20,14 +20,9 @@
       var player = document.createElement('audio'),
           body = document.querySelector('body');
 
-      console.log(blob);
-      console.log(URL.createObjectURL(blob));
-
       player.src = response.textToSpeech;
 
       body.appendChild(player);
-
-
     };
 
     //////////////////////////////

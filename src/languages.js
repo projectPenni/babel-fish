@@ -22,10 +22,7 @@ module.exports = function (from, res) {
         'voices': []
       },
       output = {},
-      results = {
-        'source': [],
-        'target': []
-      };
+      results = {};
 
   if (credentials) {
     speechToText = watson.speech_to_text({
@@ -65,7 +62,7 @@ module.exports = function (from, res) {
           output.speechToText.push({
             'name': model.name,
             'language': model.language,
-            'desc': languages.getLanguageInfo(model.language).nativeName
+            'desc': model.description.replace(' broadband model.', '')
           });
 
 
@@ -136,6 +133,32 @@ module.exports = function (from, res) {
           });
 
           // results
+
+          sourceTarget.source.forEach(function (source) {
+            output.speechToText.forEach(function (s2t)) {
+              if (s2t.indexOf(source) >= 0) {
+                results[s2t.language] = {
+                  'name': s2t.name,
+                  'desc': s2t.desc,
+                  'code': source,
+                  'targets': []
+                }
+
+                output.languageTranslation.forEach(function (lt) {
+                  if (lt.source === source) {
+                    if (sourceTarget.voices.indexOf(lt.target) >= 0) {
+                      results[s2t.language].targets.push({
+                        'code': lt.target,
+                        'desc': languages.getLanguageInfo(lt.target).nativeName
+                      })
+                    }
+                  }
+                });
+              }
+            });
+          });
+
+          output.results = results;
 
           output.sourceTarget = sourceTarget;
 

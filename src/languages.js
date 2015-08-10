@@ -158,48 +158,7 @@ module.exports = function (from, res) {
             });
           });
 
-          // sourceTarget.source.forEach(function (source) {
-          //   output.textToSpeech.forEach(function (s2t) {
-          //     if (s2t.indexOf(source) >= 0) {
-          //       results[s2t.language] = {
-          //         'name': s2t.name,
-          //         'desc': s2t.desc,
-          //         'code': source,
-          //         'targets': []
-          //       }
-          //     }
-          //   });
-          // });
-
-          // sourceTarget.source.forEach(function (source) {
-          //   output.speechToText.forEach(function (s2t) {
-          //     if (s2t.indexOf(source) >= 0) {
-          //       results[s2t.language] = {
-          //         'name': s2t.name,
-          //         'desc': s2t.desc,
-          //         'code': source,
-          //         'targets': []
-          //       }
-
-          //       output.languageTranslation.forEach(function (lt) {
-          //         if (lt.source === source) {
-          //           if (sourceTarget.voices.indexOf(lt.target) >= 0) {
-          //             results[s2t.language].targets.push({
-          //               'code': lt.target,
-          //               'desc': languages.getLanguageInfo(lt.target).nativeName
-          //             })
-          //           }
-          //         }
-          //       });
-          //     }
-          //   });
-          // });
-
-          output.results = results;
-
-          output.sourceTarget = sourceTarget;
-
-          res.send(output);
+          res.send(results);
         });
 
 

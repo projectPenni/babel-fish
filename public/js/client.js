@@ -25,6 +25,17 @@
   });
 
   //////////////////////////////
+  // Get query parameters
+  // From http://stackoverflow.com/questions/901115/how-can-i-get-query-string-values-in-javascript
+  //////////////////////////////
+  var getParameterByName = function getParameterByName(name) {
+    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+        results = regex.exec(location.search);
+    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+  }
+
+  //////////////////////////////
   // Set Available Languages
   //////////////////////////////
   var languages = new XMLHttpRequest(),
@@ -36,6 +47,7 @@
   languages.onload = function () {
 
     var languages = this.response,
+        prevResponse,
         loadKey,
         options = {
           'source': '',
@@ -97,6 +109,18 @@
       localStorage.setItem('target', key);
     });
 
+    prevResponse = getParameterByName('result');
+
+    if (prevResponse) {
+      prevResponse = JSON.parse(atob(prevResponse));
+      source.value = prevResponse.formData.source.code;
+      localStorage.setItem('source', prevResponse.formData.source.code);
+      localStorage.setItem('target', prevResponse.formData.target.code);
+      setTranslation(prevResponse.formData.source.code, false);
+      populateOutput(prevResponse);
+    }
+
+    console.log(prevResponse);
   }
   languages.send();
 
@@ -111,6 +135,7 @@
       console.log(response);
 
       var player = new Audio(),
+          query = '?result=',
           translation = '';
 
       player.src = response.textToSpeech;
@@ -123,7 +148,16 @@
 
       player.play();
 
-      console.log(translated);
+      query += btoa(JSON.stringify(response));
+
+      // console.log(query);
+
+      history.pushState({
+        'result': response.textToSpeech
+      }, 'result', query);
+
+      // document.location.search = 'foo';
+
       translated.innerHTML = translation;
 
       source.disabled = false;

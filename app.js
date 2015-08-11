@@ -26,9 +26,6 @@ var speechToText = require('./src/speech-to-text'),
 fs.ensureDirSync('./tmp');
 fs.ensureDirSync('./public/responses');
 
-// Start cleaning
-clean();
-
 // serve the files out of ./public as our main files
 app.use(express.static(__dirname + '/public'));
 

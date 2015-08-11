@@ -16,12 +16,18 @@
       translated,
       body;
 
+  var count = localStorage.getItem('record count');
+
   window.addEventListener('DOMContentLoaded', function () {
     source = document.getElementById('translate--source');
     target = document.getElementById('translate--target');
     microphone = document.getElementById('record');
     translated = document.querySelector('.translated');
     body = document.querySelector('body');
+
+    if (count > 5) {
+      translated.innerHTML = '';
+    }
   });
 
   //////////////////////////////
@@ -166,6 +172,13 @@
       target.disabled = false;
       body.removeAttribute('data-disabled');
       microphone.removeAttribute('data-disabled');
+      if (count) {
+        count++
+      }
+      else {
+        count = 1;
+      }
+      localStorage.setItem('record count', count);
     };
 
     //////////////////////////////

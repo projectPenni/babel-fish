@@ -22,8 +22,6 @@ var speechToText = require('./src/speech-to-text'),
     translateToSpeech = require('./src/translate-to-speech'),
     languages = require('./src/languages');
 
-var clean = require('./src/clean');
-
 // Ensure TMP exists
 fs.ensureDirSync('./tmp');
 fs.ensureDirSync('./public/responses');

@@ -907,6 +907,8 @@ pre[class*=" language-"] {
 
 .iconic-microphone {
   fill: #3c4646; }
+  .iconic-microphone:hover {
+    cursor: pointer; }
   .iconic-microphone-head-top {
     fill: #6d7777; }
   [data-recording] .iconic-microphone {

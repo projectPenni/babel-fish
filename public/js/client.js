@@ -36,13 +36,14 @@
   languages.onload = function () {
 
     var languages = this.response,
+        loadKey,
         options = {
           'source': '',
           'target': ''
         };
 
-    var setTranslation = function setTranslation(key) {
-      key = key ? key : Object.keys(languages)[0];
+    var setTranslation = function setTranslation(key, change) {
+      change = change === 'undefined' ? true : change
       options.target = '';
 
       languages[key].targets.forEach(function (translate) {
@@ -50,6 +51,11 @@
       });
 
       target.innerHTML = options.target;
+
+      if (change) {
+        localStorage.setItem('target', languages[key].targets[0].code);
+      }
+      target.value = localStorage.getItem('target');
     }
 
     Object.keys(languages).forEach(function (language) {
@@ -59,12 +65,36 @@
 
     source.innerHTML = options.source;
     source.setAttribute('data-model', languages[Object.keys(languages)[0]].model);
-    setTranslation();
+
+
+    if (localStorage.getItem('source')) {
+      source.value = localStorage.getItem('source');
+      loadKey = localStorage.getItem('source');
+    }
+    else {
+      localStorage.setItem('source', Object.keys(languages)[0]);
+      loadKey = Object.keys(languages)[0];
+    }
+
+    if (localStorage.getItem('target')) {
+      target.value = localStorage.getItem('target');
+      setTranslation(loadKey, false);
+    }
+    else {
+      localStorage.setItem('target', languages[Object.keys(languages)[0]].targets[0].code);
+      setTranslation(loadKey, true);
+    }
 
     source.addEventListener('change', function (e) {
-      var key = e.target.value
-      setTranslation(key);
-      e.target.setAttribute('data-model', languages[key].model)
+      var key = e.target.value;
+      setTranslation(key, true);
+      e.target.setAttribute('data-model', languages[key].model);
+      localStorage.setItem('source', key);
+    });
+
+    target.addEventListener('change', function (e) {
+      var key = e.target.value;
+      localStorage.setItem('target', key);
     });
 
   }

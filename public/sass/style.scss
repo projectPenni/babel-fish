@@ -105,6 +105,10 @@
 .iconic-microphone {
   fill: color('cool gray', 7);
 
+  &:hover {
+    cursor: pointer;
+  }
+
   &-head-top {
     fill: color('cool gray', 5);
   }

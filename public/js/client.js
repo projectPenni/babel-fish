@@ -76,7 +76,6 @@
     });
 
     source.innerHTML = options.source;
-    source.setAttribute('data-model', languages[Object.keys(languages)[0]].model);
 
 
     if (localStorage.getItem('source')) {
@@ -88,12 +87,15 @@
       loadKey = Object.keys(languages)[0];
     }
 
+    source.setAttribute('data-model', languages[loadKey].model);
+
     if (localStorage.getItem('target')) {
       target.value = localStorage.getItem('target');
       setTranslation(loadKey, false);
     }
     else {
       localStorage.setItem('target', languages[Object.keys(languages)[0]].targets[0].code);
+
       setTranslation(loadKey, true);
     }
 
@@ -186,6 +188,9 @@
             xhr = new XMLHttpRequest(),
             blob,
             player;
+
+        console.log(source.value);
+        console.log(target.value);
 
         formData.append('audio', this.response);
         formData.append('source', JSON.stringify({

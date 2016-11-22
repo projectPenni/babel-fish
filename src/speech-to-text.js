@@ -3,9 +3,8 @@
 var watson = require('watson-developer-cloud'),
     credentials = {};
 
-if (process.env.VCAP_SERVICES) {
-  credentials = JSON.parse(process.env.VCAP_SERVICES).speech_to_text[0].credentials;
-}
+credentials = require('../config.js').speech_to_text.login;
+console.log(credentials);
 
 module.exports = function (params, cb) {
   var speechToText;

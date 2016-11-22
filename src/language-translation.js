@@ -3,9 +3,7 @@
 var watson = require('watson-developer-cloud'),
     credentials = {};
 
-if (process.env.VCAP_SERVICES) {
-  credentials = JSON.parse(process.env.VCAP_SERVICES).language_translation[0].credentials;
-}
+credentials = require('../config.js').language_translation.login;
 
 module.exports = function (params, cb) {
   var languageTranslation;
